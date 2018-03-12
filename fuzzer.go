@@ -1,3 +1,7 @@
+// Copyright (c) 2018 Andreas Auernhammer. All rights reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
 package sf
 
 import (
@@ -63,7 +67,7 @@ func (mf MultiFuzzer) Adjust(resp *http.Response) {
 
 // RegisterFuzzer wraps a http.RounderTripper. The returned
 // http.RounderTripper modifies all HTTP request using the
-// provided fuzzers before the request is processed any futher.
+// provided fuzzers before the request is processed any further.
 func RegisterFuzzer(rt http.RoundTripper, f ...Fuzzer) http.RoundTripper {
 	return fuzzer{rt: rt, fz: MultiFuzzer(f)}
 }

@@ -1,3 +1,7 @@
+// Copyright (c) 2018 Andreas Auernhammer. All rights reserved.
+// Use of this source code is governed by a license that can be
+// found in the LICENSE file.
+
 package s3
 
 import (
@@ -75,7 +79,7 @@ const (
 var headers = map[string]Type{
 	"Content-Length":                                  s3Int{},
 	"Content-MD5":                                     base64{16},
-	"Expect":                                          enum([]string{"100-contine"}),
+	"Expect":                                          enum([]string{"100-continue"}),
 	"Date":                                            time([]string{gotime.RFC1123, gotime.RFC1123Z, formatISO8601}),
 	"X-Amz-Content-Sha256":                            base64{32},
 	"X-Amz-Date":                                      time([]string{gotime.RFC1123, gotime.RFC1123Z, formatISO8601}),
