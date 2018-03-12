@@ -2,6 +2,9 @@
 // Use of this source code is governed by a license that can be
 // found in the LICENSE file.
 
+// Package headers provides functionality to generate S3 HTTP headers
+// randomly using type constraints of S3. Therefore this package
+// provides lookup functions to get the value type of a header key.
 package headers
 
 import (

@@ -2,11 +2,12 @@
 // Use of this source code is governed by a license that can be
 // found in the LICENSE file.
 
+// Package sf provides general HTTP S3 fuzzing types and functionality.
+// It provides interfaces and generic implementations of fuzzers and
+// the hooking mechanism to register fuzzing.
 package sf
 
-import (
-	"net/http"
-)
+import "net/http"
 
 // Fuzzer is the generic interface for adding
 // S3 fuzzing functionality. A fuzzer takes an
