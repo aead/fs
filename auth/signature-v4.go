@@ -17,7 +17,7 @@ import (
 // SignerV4 returns a Fuzzer signing the request
 // using AWS signature V4.
 func SignerV4(accessKey, secretKey, token string) sf.Fuzzer {
-	return &signerV2{AccessKey: accessKey, SecretKey: secretKey, SessionToken: token}
+	return &signerV4{AccessKey: accessKey, SecretKey: secretKey, SessionToken: token}
 }
 
 type signerV4 struct {
