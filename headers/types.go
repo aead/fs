@@ -9,6 +9,7 @@ package headers
 
 import (
 	gobase64 "encoding/base64"
+	gohex "encoding/hex"
 	"io"
 	"strconv"
 	gotime "time"
@@ -38,6 +39,8 @@ const (
 	Time Kind = "time"
 	// Base64 is a base64-encoded string
 	Base64 Kind = "base64"
+	// Hex is a hex-encoded string
+	Hex Kind = "hex"
 )
 
 // TypeOf returns the type of the provided header.
@@ -64,6 +67,7 @@ var ( // check interface compatibility at compile time
 	_ Type = (enum)(nil)
 	_ Type = (*time)(nil)
 	_ Type = (*base64)(nil)
+	_ Type = (*hex)(nil)
 )
 
 var values = map[Kind][]string{}
@@ -91,6 +95,8 @@ var headers = map[string]Type{
 	"X-Amz-Server-Side-Encryption-Customer-Key":       base64{32},
 	"X-Amz-Server-Side-Encryption-Customer-Key-Md5":   base64{16},
 	"X-Amz-Server-Side-Encryption-Context":            base64{-8 * 1024}, // max 8 KB
+	"X-Amz-Storage-Class":                             enum([]string{"STANDARD", "STANDARD_IA", "REDUCED_REDUNDANCY"}),
+	"Etag":                                            hex{16},
 }
 
 type s3Int struct{}
@@ -124,3 +130,17 @@ func (b base64) Random(rand sf.Random) string {
 	return gobase64.StdEncoding.EncodeToString(data)
 }
 func (base64) Kind() Kind { return Base64 }
+
+type hex struct{ Length int }
+
+func (h hex) Random(rand sf.Random) string {
+	if h.Length < 0 { // choose a random length
+		h.Length = rand.Int() % (-h.Length)
+	}
+	data := make([]byte, h.Length)
+	if _, err := io.ReadFull(&rand, data); err != nil {
+		panic("ran out of randomness")
+	}
+	return gohex.EncodeToString(data)
+}
+func (hex) Kind() Kind { return Hex }
